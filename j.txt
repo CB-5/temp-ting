@@ -1,0 +1,105 @@
+using System;
+using System.ComponentModel.Design;
+using System.Runtime.CompilerServices;
+Console.Title = "Temperature Converter";
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("Celsius is represented by 'C'\nFahrenheit is represented by 'F'\nKelvin is represented by 'K' \n");
+Console.ForegroundColor = ConsoleColor.Red;
+Console.WriteLine("This program converts temperature values from  Celsius, Kelvin and Fahrenheit.\n");
+Console.ForegroundColor = ConsoleColor.White;
+
+double initialTemp = 0;
+
+static void InitTemp(double initialTemp)
+{
+    Console.WriteLine("Please input your temperature.");
+
+        try
+        {
+            initialTemp = double.Parse(Console.ReadLine());
+        }
+        catch
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You must input a number value for the temperature. Please try again.");
+            Console.ForegroundColor = ConsoleColor.White;
+            InitTemp(initialTemp);
+        }
+}
+
+
+
+static void Tempconvert(double initialTemp)
+{
+
+    InitTemp(initialTemp);
+
+        //conversion variable
+        Console.WriteLine("What value of temperature is this?");
+    string tempType = Console.ReadLine();
+    tempType = tempType.ToUpper();
+
+    //convert to?
+    Console.WriteLine("What would you like to convert this to?");
+    string ctempType = Console.ReadLine();
+    ctempType = ctempType.ToUpper();
+
+
+    //declaring final temp
+    double finTemp = 0;
+
+
+    //celsius to fahrenheit
+    {
+        if (tempType == "C" && ctempType == "F") finTemp = (initialTemp * (9 / 5)) + 32;
+        //celsius to kelvin
+        else if (tempType == "C" && ctempType == "K") finTemp = (initialTemp + 273.15);
+
+        //fahrenheit to celsius
+        else if (tempType == "F" && ctempType == "C") finTemp = ((initialTemp - 32) * (5 / 9));
+        //fahrenheit to Kelvin
+        else if (tempType == "F" && ctempType == "K") finTemp = ((initialTemp + 459.67) * (5 / 9));
+
+
+        //kelvin to celcius
+        else if (tempType == "K" && ctempType == "C") finTemp = (initialTemp - 273.15);
+        //kelvin to fahrenheit
+        else if (tempType == "K" && ctempType == "F") finTemp = (((initialTemp - 273.15) * (9 / 5)) + 32);
+
+        //finishing if
+        else
+        {
+            Console.WriteLine("Your inputs are invalid.");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(" \nConverting a temperature to the same value gives the same answer. \nPlease look at the characters representing scales and try again.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+    }
+
+
+
+    //displaying the final temperature
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        if (ctempType == "C") Console.WriteLine("Your converted temperature is " + finTemp + "C.");
+        else if (ctempType == "F") Console.WriteLine("Your converted temperature is " + finTemp + "F.");
+        else if (ctempType == "K") Console.WriteLine("Your converted temperature is " + finTemp + "K.");
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+
+    Console.WriteLine("Enter 1 to continue the program and convert more temperatures, enter any other key to end the program.");
+    var answer = (Console.ReadLine());
+    if (answer == "1") Tempconvert(initialTemp);
+
+    else
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("\nMade by Shawn Weingartner :)\n");
+        Console.ForegroundColor = ConsoleColor.White;
+        Environment.Exit(0);
+    }
+}
+
+
+Tempconvert(initialTemp);
+
